@@ -1,1 +1,2 @@
 -- aula 43 (comandos adicionais).
+-- testando nova conexão
