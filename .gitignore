@@ -1,0 +1,31 @@
+# Arquivos temporários do DBeaver
+*.log
+*.tmp
+*.bak
+*.lck
+
+# Cache do DBeaver
+.metadata/
+.guids*
+*.dat
+*.dbf
+
+# Configurações pessoais
+.dbeaver/
+connection-configs/
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# Backups
+*.backup
+*.old
+
+# Senhas e credenciais
+*.pw
+*.pass
+credentials.*
+config.ini
+secrets.*
+EOF
