@@ -1,0 +1,1 @@
+-- bringing my sql study from Github
