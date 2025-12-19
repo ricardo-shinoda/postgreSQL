@@ -125,11 +125,52 @@ INNER JOIN vendedor AS vnd ON vnd.idvendedor = pdd.idvendedor
 GROUP BY vnd.nome;
 
 --12.O nome da transportadora e o somatório do valor do pedido (agrupado por transportadora).
+SELECT * FROM transportadora;
+SELECT * FROM pedido;
+SELECT 
+	trn.nome AS "Nome da transportadora",
+	sum(pdd.valor) AS "Somatórioa do valor do pedido"
+FROM pedido AS pdd
+INNER JOIN transportadora AS trn ON pdd.idtransportadora = trn.idtransportadora 
+GROUP BY trn.nome;
 
 --13.O nome do cliente e a quantidade de pedidos de cada um (agrupado por cliente).
+SELECT * FROM cliente;
+SELECT * FROM pedido;
+
+SELECT 
+	cln.nome AS "Nome do cliente",
+	sum(pdd.idpedido) AS "Somatória de quantidade de pedidos"
+FROM pedido AS pdd
+INNER JOIN cliente AS cln ON pdd.idcliente = cln.idcliente 
+GROUP BY cln.nome;
 
 --14.O nome do produto e a quantidade vendida (agrupado por produto).
+SELECT * FROM produto;
+SELECT * FROM pedido_produto;
+
+SELECT 
+	prd.nome AS "Nome do produto",
+	count(ppd.quantidade) AS "Quantidade vendida"
+FROM pedido_produto AS ppd
+INNER JOIN produto AS prd ON ppd.idproduto = prd.idproduto
+GROUP BY prd.nome;
+
 
 --15.A data do pedido e o somatório do valor dos produtos do pedido (agrupado pela data do pedido).
+SELECT * FROM pedido;
+SELECT * FROM produto;
+SELECT 
+	pdd.data_pedido AS "Data do pedido",
+	sum(pdd.valor) AS "Somatória do valor do produto"
+FROM pedido AS pdd
+GROUP BY pdd.data_pedido;
+
 
 --16.A data do pedido e a quantidade de produtos do pedido (agrupado pela data do pedido).
+
+SELECT
+	pdd.data_pedido AS "Data do pedido",
+	count(pdd.idcliente) AS "Quantidade de produtos por pedido"
+FROM pedido AS pdd
+GROUP BY pdd.data_pedido;
