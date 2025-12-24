@@ -8,7 +8,7 @@ SELECT
 	numero AS "Número",
 	com.nome AS "Complemento",
 	brr.nome AS "Bairro",
-	mun.nome AS "Municíopio",
+	mun.nome AS "Município",
 	uf.nome AS "Unidade de federação"
 FROM
 	cliente AS cln
@@ -68,7 +68,7 @@ SELECT
 	cln.nome AS "Nome do cliente",
 	pdd.data_pedido AS "Data do pedido"
 FROM pedido AS pdd
-LEFT JOIN cliente AS cln ON cln.idcliente = pdd.idcliente
+INNER  JOIN cliente AS cln ON cln.idcliente = pdd.idcliente
 ORDER BY cln.nome;
 
 --7. O nome dos clientes e a data do pedido de todos os clientes, independente se tenham feito pedido (ordenado pelo nome do cliente).
@@ -140,7 +140,7 @@ SELECT * FROM pedido;
 
 SELECT 
 	cln.nome AS "Nome do cliente",
-	sum(pdd.idpedido) AS "Somatória de quantidade de pedidos"
+	count(pdd.idpedido) AS "Somatória de quantidade de pedidos"
 FROM pedido AS pdd
 INNER JOIN cliente AS cln ON pdd.idcliente = cln.idcliente 
 GROUP BY cln.nome;
@@ -151,19 +151,20 @@ SELECT * FROM pedido_produto;
 
 SELECT 
 	prd.nome AS "Nome do produto",
-	count(ppd.quantidade) AS "Quantidade vendida"
+	sum(ppd.quantidade) AS "Quantidade vendida"
 FROM pedido_produto AS ppd
 INNER JOIN produto AS prd ON ppd.idproduto = prd.idproduto
 GROUP BY prd.nome;
 
 
 --15.A data do pedido e o somatório do valor dos produtos do pedido (agrupado pela data do pedido).
+SELECT * FROM pedido_produto;
 SELECT * FROM pedido;
-SELECT * FROM produto;
 SELECT 
 	pdd.data_pedido AS "Data do pedido",
-	sum(pdd.valor) AS "Somatória do valor do produto"
-FROM pedido AS pdd
+	sum(pdt.valor_unitario) AS "Somatória do valor do produto"
+FROM pedido_produto AS pdt
+INNER JOIN pedido AS pdd ON pdd.idpedido = pdt.idpedido
 GROUP BY pdd.data_pedido;
 
 
