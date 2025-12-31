@@ -169,9 +169,14 @@ GROUP BY pdd.data_pedido;
 
 
 --16.A data do pedido e a quantidade de produtos do pedido (agrupado pela data do pedido).
-
+SELECT * FROM pedido_produto;
+SELECT * FROM pedido;
 SELECT
 	pdd.data_pedido AS "Data do pedido",
-	count(pdd.idcliente) AS "Quantidade de produtos por pedido"
+	sum(pdp.quantidade) AS "Quantidade de produtos por pedido"
 FROM pedido AS pdd
+INNER JOIN pedido_produto AS pdp ON pdp.idpedido = pdd.idpedido
 GROUP BY pdd.data_pedido;
+
+SELECT * FROM cliente;
+SELECT nome, COALESCE (profissao, 'Sem registro') AS "Profissão" FROM cliente;
