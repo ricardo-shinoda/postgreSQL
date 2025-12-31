@@ -1,5 +1,5 @@
 --1. O nome do cliente, a profissão, a nacionalidade, o logradouro, o número, o complemento, o bairro, o município e a unidade de federação.
---SELECT * FROM cliente;
+SELECT * FROM cliente;
 SELECT
 	cln.nome AS "Cliente",
 	prf.nome AS "Profissão",

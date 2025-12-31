@@ -21,6 +21,7 @@ CREATE table cliente (
 	CONSTRAINT pk_cln_idcliente PRIMARY KEY (idcliente)
 );
 
+
 INSERT INTO cliente (idcliente, nome, cpf, rg, data_nascimento, genero, profissao, nacionalidade, logradouro, numero, complemento, bairro, municipio, uf, observacoes) VALUES
 (1, 'Manoel', '88828383821', '32323', '2001-10-10', 'M', 'Estudante', 'Brasileira', 'Rua Joaquim Nabuco', '23', 'Casa', 'Cidade Nova', 'Porto União', 'SC', NULL),
 (2, 'Geraldo', '12343299291', '56565', '1987-04-01', 'M', 'Engenheiro', 'Brasileira', 'Rua das Limas', '200', 'Ap.', 'Centro', 'P. União', 'SC', NULL),
@@ -38,12 +39,11 @@ INSERT INTO cliente (idcliente, nome, cpf, rg, data_nascimento, genero, profissa
 (14, 'Jeferson', NULL, NULL, '1983-01-07', 'M', NULL, 'Brasileiro', NULL, NULL, NULL, NULL, 'União da Vitória', 'PR', NULL),
 (15, 'Jessica', NULL, NULL, NULL, 'F', 'Estudante', NULL, NULL, NULL, NULL, NULL, 'União da Vitória', 'PR', NULL);
 
-SELECT * FROM cliente;
 
 INSERT INTO cliente (idcliente, nome, cpf, rg, data_nascimento, genero, profissao, nacionalidade, logradouro, numero, complemento, bairro, municipio, uf, observacoes) VALUES
 (16, 'Getúlio', NULL, '4631', NULL, 'M',  'Estudante', 'Brasileira', 'Rua Central', '343', 'Apartamento', 'Centro', 'Curitiba', 'PR', null);
 
-SELECT * FROM cliente WHERE nome LIKE 'Getúlio';
+--SELECT * FROM cliente WHERE nome LIKE 'Getúlio';
 
 UPDATE cliente SET cpf = '1234567890' WHERE idcliente = 16;
 
@@ -64,7 +64,7 @@ INSERT INTO profissao (idprofissao, nome) VALUES
 (4, 'Jornalista'),
 (5, 'Professor');
 
-SELECT * FROM profissao;
+--SELECT * FROM profissao;
 
 
 -- Criando a tabela nacionalidade e inserindo valores
@@ -82,7 +82,7 @@ VALUES
 (3, 'Norte Americana'),
 (4, 'Alemã');
 
-SELECT * FROM nacionalidade;
+--SELECT * FROM nacionalidade;
 
 -- Criando a tabela complemento e inserindo valores
 CREATE TABLE complemento (
@@ -101,7 +101,7 @@ VALUES
 (1, 'Casa'),
 (2, 'apartamento');
 
-SELECT * FROM complemento;
+--SELECT * FROM complemento;
 
 -- Criando a tabela Bairro e inserindo valores
 CREATE TABLE bairro (
@@ -120,7 +120,7 @@ VALUES
 (3, 'São Pedro'),
 (4, 'Santa Rosa');
 
-SELECT * FROM cliente;
+--SELECT * FROM cliente;
 
 
 -- Alterar a estrutura de uma tabela
@@ -143,7 +143,7 @@ UPDATE cliente  SET idprofissao = 5 WHERE idcliente IN (6, 7, 8, 13);
 UPDATE cliente  SET idprofissao = NULL WHERE idcliente IN (11, 14);
 --Null -> 11,14
 
-SELECT * FROM cliente;
+--SELECT * FROM cliente;
 
 -- primeiro criar a nova coluna de idnacionalidade:
 ALTER TABLE cliente ADD COLUMN idnacionalidade INT;
@@ -164,7 +164,7 @@ UPDATE cliente SET idnacionalidade = 4 WHERE nacionalidade = 'Alemã';
 -- deletando a coluna antiga nacionalidade
 ALTER TABLE cliente DROP COLUMN nacionalidade;
 
-SELECT * FROM cliente;
+--SELECT * FROM cliente;
 
 -- Altera a tabela para adicionar a nova coluna idcomplementos
 ALTER TABLE cliente ADD COLUMN idcomplemento integer;
@@ -177,7 +177,7 @@ UPDATE cliente SET idcomplemento = 2 WHERE complemento = 'Apartamento' OR comple
 -- Remove old column complemento.
 ALTER TABLE cliente DROP COLUMN complemento;
 
-SELECT * FROM bairro;
+--SELECT * FROM bairro;
 -- 1 - cidade nova | 2 - centro | 3 - São pedro | 4 - Santa rosa
 
 -- adicionando a coluna idbairro e a constraint de foreign key
@@ -228,7 +228,7 @@ UPDATE cliente SET idmunicipio = 10 WHERE municipio IN ('Curitiba');
 
 ALTER TABLE cliente DROP COLUMN municipio;
 
-SELECT * FROM cliente;
+--SELECT * FROM cliente;
 
 CREATE TABLE uf (
 	iduf integer NOT NULL,
@@ -247,7 +247,7 @@ INSERT INTO uf (iduf, nome, sigla) VALUES
 --(5, 'Rio Grande do Sul', 'RS');
 (6, 'Rio de Janeiro', 'RJ');
 
-SELECT * FROM uf;
+--SELECT * FROM uf;
 
 ALTER TABLE cliente ADD COLUMN iduf int;
 
@@ -274,7 +274,7 @@ CREATE TABLE pedido (
 	CONSTRAINT fk_pdd_idvendedor FOREIGN KEY (idvendedor) REFERENCES vendedor (idvendedor)
 );
 
-SELECT * FROM produto;
+--SELECT * FROM produto;
 
 -- Inserindo os dados nas tabelas
 
@@ -329,10 +329,10 @@ VALUES
 (14, 6, 3, 100),  -- Pedido 14, Memória RAM (3 unidades)
 (15, 3, 1, 200);
 
-SELECT * FROM pedido_produto;
-
-SELECT * FROM uf;
-SELECT * FROM municipio;
+--SELECT * FROM pedido_produto;
+--
+--SELECT * FROM uf;
+--SELECT * FROM municipio;
 
 ALTER TABLE municipio ADD COLUMN ufid int;
 ALTER TABLE municipio ADD CONSTRAINT fk_mun_ufid FOREIGN KEY (ufid) REFERENCES uf (iduf);
@@ -347,25 +347,25 @@ UPDATE municipio SET ufid = 5 WHERE nome LIKE 'Porto Alegre';
 
 -- media
 
-SELECT avg(valor) FROM pedido;
+--SELECT avg(valor) FROM pedido;
 
 -- count
-SELECT * FROM municipio;
-SELECT count(idmunicipio) FROM municipio;
-
-SELECT count(idmunicipio) FROM municipio WHERE ufid = 2;
+--SELECT * FROM municipio;
+--SELECT count(idmunicipio) FROM municipio;
+--
+--SELECT count(idmunicipio) FROM municipio WHERE ufid = 2;
 
 -- o valor máximo
 
-SELECT max(valor) FROM pedido;
+--SELECT max(valor) FROM pedido;
 
 -- o valor minimo
-SELECT min(valor) FROM pedido;
+--SELECT min(valor) FROM pedido;
 
-SELECT min(valor), max(valor) FROM pedido;
+--SELECT min(valor), max(valor) FROM pedido;
 
 -- somatório de pedido agrupado por cliente
 
-SELECT idcliente, sum(valor) FROM pedido GROUP BY idcliente ORDER BY idcliente;
-
-SELECT idcliente, sum(valor) FROM pedido GROUP BY idcliente HAVING sum(valor) > 500;
+--SELECT idcliente, sum(valor) FROM pedido GROUP BY idcliente ORDER BY idcliente;
+--
+--SELECT idcliente, sum(valor) FROM pedido GROUP BY idcliente HAVING sum(valor) > 500;
