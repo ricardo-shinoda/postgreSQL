@@ -1,1 +1,0 @@
--- script to create a new DB in a new project

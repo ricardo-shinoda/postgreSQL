@@ -24,30 +24,84 @@ SELECT * FROM cliente ORDER BY nome;
 -- Trazendo os clientes em ordem alfabética decrescente
 SELECT * FROM cliente ORDER BY nome DESC;
 
-1. O nome, o gênero e a profissão de todos os clientes, ordenado pelo nome em ordem decrescente
+--1. O nome, o gênero e a profissão de todos os clientes, ordenado pelo nome em ordem decrescente
+SELECT * FROM cliente;
 
-2. Os clientes que tenham a letra “R” no nome
+--2. Os clientes que tenham a letra “R” no nome
+--
+--3. Os clientes que o nome inicia com a letra “C”
+--
+--4. Os clientes que o nome termina com a letra “A”
+--
+--5. Os clientes que moram no bairro “Centro”
+--
+--6. Os clientes que moram em complementos que iniciam com a letra “A”
+--
+--7. Somente os clientes do sexo feminino
+--
+--8. Os clientes que não informaram o CPF
+--
+--9. O nome e a profissão dos clientes, ordenado em ordem crescente pelo nome da profissão
+--
+--10. Os clientes de nacionalidade “Brasileira”
+--
+--11. Os clientes que informaram o número da residência
+--
+--12. Os clientes que moram em Santa Catarina
+--
+--13. Os clientes que nasceram entre 01/01/2000 e 01/01/2002
+--
+--14. O nome do cliente e o logradouro, número, complemento, bairro, município e UF concatenado de todos os clientes
 
-3. Os clientes que o nome inicia com a letra “C”
 
-4. Os clientes que o nome termina com a letra “A”
+-- Comandos Adicionais
 
-5. Os clientes que moram no bairro “Centro”
+-- Extraindo dia, mês ou ano de uma data.
 
-6. Os clientes que moram em complementos que iniciam com a letra “A”
+SELECT * FROM pedido;
+SELECT
+	data_pedido AS "Data do pedido",
+	EXTRACT (DAY FROM data_pedido) AS "Dia",
+	EXTRACT(MONTH FROM data_pedido) AS "Mês",
+	EXTRACT(YEAR FROM data_pedido) AS "Ano"
+FROM pedido;
 
-7. Somente os clientes do sexo feminino
 
-8. Os clientes que não informaram o CPF
+-- Extraindo caracteres de uma string
 
-9. O nome e a profissão dos clientes, ordenado em ordem crescente pelo nome da profissão
+SELECT
+	nome,
+	substring(nome FROM 1 FOR 3) AS "Somente esses", -- Somente do 1 ao 3 caractarer
+	substring(nome, 4) AS "Sem os primeiros" -- A partir do quarto
+FROM cliente;
 
-10. Os clientes de nacionalidade “Brasileira”
 
-11. Os clientes que informaram o número da residência
+-- Transformando tudo em maiúsculo
 
-12. Os clientes que moram em Santa Catarina
+SELECT
+	nome,
+	UPPER(nome)
+FROM cliente;
 
-13. Os clientes que nasceram entre 01/01/2000 e 01/01/2002
 
-14. O nome do cliente e o logradouro, número, complemento, bairro, município e UF concatenado de todos os clientes
+-- Adicionando uma mensagem ao campo NULL
+
+
+SELECT
+	nome,
+	COALESCE(cpf, 'CPF não informado')
+FROM cliente;
+
+
+-- Condicional CASE
+
+SELECT * FROM uf;
+
+SELECT
+	sigla,
+	CASE sigla
+		WHEN 'RJ' THEN 'Rio de Janeiro'
+		WHEN 'SP' THEN 'SÃO PAULO'
+	ELSE 'Outros'
+	END AS "Nome do estado"
+FROM uf;
