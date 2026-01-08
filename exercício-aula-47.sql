@@ -8,11 +8,29 @@ WHERE
 	idmunicipio = (SELECT idmunicipio FROM cliente WHERE nome = 'Manoel') AND nome != 'Manoel';
 
 --2. A data e o valor dos pedidos que o valor do pedido seja menor que a média de todos os pedidos.
---
+SELECT 
+	data_pedido,
+	valor
+FROM pedido
+WHERE 
+	valor < (SELECT avg(valor) FROM pedido);
+
 --3. A data,o valor, o cliente e o vendedor dos pedidos que possuem 2 ou mais produtos.
---
---4. O nome dos clientes que moram na mesma cidade da transportadora BSTransportes.
---
+SELECT
+	data_pedido,
+	valor,
+	idcliente,
+	idvendedor,
+	(SELECT count(idpedido) FROM pedido_produto pdp WHERE pdp.idpedido = pdd.idpedido ) AS "Quantidade pedido"
+FROM pedido pdd
+WHERE (SELECT count(idpedido) FROM pedido_produto pdp WHERE pdp.idpedido = pdd.idpedido ) >= 2;
+
+--4. O nome dos clientes que moram na mesma cidade (4) da transportadora BSTransportes.
+SELECT
+	nome
+FROM cliente
+WHERE idmunicipio = (SELECT idmunicipio FROM transportadora WHERE nome = 'BS. Transportes');
+
 --5. O nome do cliente e o município dos clientes que estão localizados no mesmo município de qualquer uma das transportadoras.
 --
 --6. Atualizar o valor do pedido em 5% para os pedidos que o somatório do valor total dos produtos daquele pedido seja maior que a média do valor total
