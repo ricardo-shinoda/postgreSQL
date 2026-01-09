@@ -32,7 +32,12 @@ FROM cliente
 WHERE idmunicipio = (SELECT idmunicipio FROM transportadora WHERE nome = 'BS. Transportes');
 
 --5. O nome do cliente e o município dos clientes que estão localizados no mesmo município de qualquer uma das transportadoras.
---
+SELECT
+	clt.nome,
+	(SELECT nome FROM municipio mun WHERE clt.idmunicipio = mun.idmunicipio)
+FROM cliente clt
+WHERE idmunicipio = (SELECT idmunicipio FROM transportadora trn WHERE clt.idmunicipio = trn.idmunicipio);
+
 --6. Atualizar o valor do pedido em 5% para os pedidos que o somatório do valor total dos produtos daquele pedido seja maior que a média do valor total
 --
 --de todos os produtos de todos os pedidos.
