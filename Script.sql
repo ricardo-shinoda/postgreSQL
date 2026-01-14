@@ -7,6 +7,20 @@ FROM cliente
 WHERE
 	idmunicipio = (SELECT idmunicipio FROM cliente WHERE nome = 'Manoel') AND nome != 'Manoel';
 
+-- Correção:
+-- Solução 1: Com JOIN (mais eficiente)
+SELECT c1.nome
+FROM cliente c1
+INNER JOIN cliente c2 ON c1.idmunicipio = c2.idmunicipio
+WHERE c2.nome = 'Manoel'
+  AND c1.nome != 'Manoel';
+
+-- Solução 2: Com IN (mais segura para múltiplos Manoéis)
+SELECT nome
+FROM cliente
+WHERE idmunicipio IN (SELECT idmunicipio FROM cliente WHERE nome = 'Manoel')
+  AND nome != 'Manoel';
+
 --2. A data e o valor dos pedidos que o valor do pedido seja menor que a média de todos os pedidos.
 SELECT 
 	data_pedido,
