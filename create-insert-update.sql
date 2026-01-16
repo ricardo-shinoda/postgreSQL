@@ -347,7 +347,7 @@ UPDATE municipio SET ufid = 5 WHERE nome LIKE 'Porto Alegre';
 
 -- media
 
---SELECT avg(valor) FROM pedido;
+SELECT avg(valor) FROM pedido;
 
 -- count
 --SELECT * FROM municipio;
