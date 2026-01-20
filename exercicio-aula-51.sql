@@ -1,9 +1,9 @@
 --Exercícios views
---
---
---
---1. O nome, a profissão, a nacionalidade, o complemento, o município, a unidade de federação, o bairro, o CPF,o RG, a data de nascimento, o gênero (mostrar “Masculino” ou “Feminino”), o logradouro, o número e as observações dos clientes.
---
+
+--1. O nome, a profissão, a nacionalidade, o complemento, o município, a unidade de federação, o bairro, 
+-- o CPF,o RG, a data de nascimento, o gênero (mostrar “Masculino” ou “Feminino”), o logradouro, o número e as observações dos clientes.
+SELECT * FROM cliente;
+
 --2. O nome do município e o nome e a sigla da unidade da federação.
 --
 --3. O nome do produto, o valor e o nome do fornecedor dos produtos.
