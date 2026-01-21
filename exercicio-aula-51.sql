@@ -26,7 +26,16 @@ LEFT JOIN bairro bai ON cln.idbairro = bai.idbairro;
 SELECT * FROM dado_cliente WHERE Cliente = 'Amanda';
 
 --2. O nome do município e o nome e a sigla da unidade da federação.
---
+CREATE VIEW address AS
+SELECT
+	mun.nome AS municipio,
+	u.nome AS uf,
+	u.sigla AS uf_sigla
+FROM municipio mun
+LEFT JOIN uf u ON mun.ufid = u.iduf;
+
+SELECT * FROM address WHERE municipio = 'São Paulo';
+
 --3. O nome do produto, o valor e o nome do fornecedor dos produtos.
 --
 --4. O nome da transportadora, o logradouro, o número, o nome da unidade de federação e a sigla da unidade de federação das transportadoras.
