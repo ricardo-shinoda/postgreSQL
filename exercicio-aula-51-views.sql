@@ -50,7 +50,18 @@ SELECT * FROM produto_fornecedor WHERE nome = 'Monitor';
 SELECT * FROM produto;
 
 --4. O nome da transportadora, o logradouro, o número, o nome da unidade de federação e a sigla da unidade de federação das transportadoras.
---
+CREATE VIEW transportadora_estado AS
+SELECT
+	trn.nome AS transportadora,
+	trn.logradouro AS logradouro,
+	trn.numero AS numero,
+	u.nome AS unidade_federacao,
+	u.sigla AS sigla
+FROM transportadora trn
+LEFT JOIN uf u ON u.iduf = (SELECT ufid FROM municipio mun WHERE trn.idmunicipio = mun.idmunicipio);
+
+SELECT * FROM transportadora_estado WHERE sigla = 'SP';
+
 --5. A data do pedido, o valor, o nome da transportadora, o nome do cliente e o nome do vendedor dos pedidos.
 --
 --6. O nome do produto, a quantidade, o valor unitário e o valor total dos produtos do pedido.
