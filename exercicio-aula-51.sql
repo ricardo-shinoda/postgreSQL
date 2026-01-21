@@ -37,7 +37,18 @@ LEFT JOIN uf u ON mun.ufid = u.iduf;
 SELECT * FROM address WHERE municipio = 'São Paulo';
 
 --3. O nome do produto, o valor e o nome do fornecedor dos produtos.
---
+CREATE VIEW produto_fornecedor as
+SELECT
+	prd.nome AS nome,
+	prd.valor AS valor,
+	frn.nome AS fornecedor
+FROM produto prd
+LEFT JOIN fornecedor frn ON prd.idfornecedor = frn.idfornecedor;
+
+SELECT * FROM produto_fornecedor WHERE nome = 'Monitor';
+
+SELECT * FROM produto;
+
 --4. O nome da transportadora, o logradouro, o número, o nome da unidade de federação e a sigla da unidade de federação das transportadoras.
 --
 --5. A data do pedido, o valor, o nome da transportadora, o nome do cliente e o nome do vendedor dos pedidos.
