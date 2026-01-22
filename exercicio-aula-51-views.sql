@@ -78,3 +78,17 @@ LEFT JOIN vendedor vdd ON vdd.idvendedor = pdd.idvendedor;
 SELECT * FROM pedidos WHERE vendedor = 'Maria';
 
 --6. O nome do produto, a quantidade, o valor unitário e o valor total dos produtos do pedido.
+CREATE VIEW somatoria_pedido AS
+SELECT
+	prd.nome AS produto,
+	pdp.quantidade AS quantidade,
+	prd.valor AS valor_unitario,
+	(SELECT sum(valor) FROM pedido pdd WHERE pdd.idpedido = pdp.idpedido) AS "total"
+FROM pedido_produto pdp
+LEFT JOIN produto prd ON pdp.idproduto = prd.idproduto;
+
+SELECT * FROM somatoria_pedido WHERE total < 1000;
+
+
+
+
