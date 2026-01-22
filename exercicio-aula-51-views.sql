@@ -14,7 +14,10 @@ SELECT
 	cln.cpf AS cpf,
 	cln.rg AS rg,
 	cln.data_nascimento AS nascimento,
-	cln.genero AS Gênero
+	cln.genero AS Gênero,
+	cln.logradouro,
+	cln.numero,
+	cln.observacoes
 FROM cliente cln
 LEFT JOIN profissao prf ON cln.idprofissao = prf.idprofissao
 LEFT JOIN nacionalidade ncl ON cln.idnacionalidade = ncl.idnacionalidade
@@ -35,6 +38,7 @@ FROM municipio mun
 LEFT JOIN uf u ON mun.ufid = u.iduf;
 
 SELECT * FROM address WHERE municipio = 'São Paulo';
+SELECT * FROM address;
 
 --3. O nome do produto, o valor e o nome do fornecedor dos produtos.
 CREATE VIEW produto_fornecedor as
@@ -47,7 +51,7 @@ LEFT JOIN fornecedor frn ON prd.idfornecedor = frn.idfornecedor;
 
 SELECT * FROM produto_fornecedor WHERE nome = 'Monitor';
 
-SELECT * FROM produto;
+SELECT * FROM produto_fornecedor;
 
 --4. O nome da transportadora, o logradouro, o número, o nome da unidade de federação e a sigla da unidade de federação das transportadoras.
 CREATE VIEW transportadora_estado AS
@@ -58,9 +62,12 @@ SELECT
 	u.nome AS unidade_federacao,
 	u.sigla AS sigla
 FROM transportadora trn
-LEFT JOIN uf u ON u.iduf = (SELECT ufid FROM municipio mun WHERE trn.idmunicipio = mun.idmunicipio);
+LEFT JOIN municipio mun ON trn.idmunicipio = mun.idmunicipio
+LEFT JOIN uf u ON u.iduf = mun.ufid;
 
 SELECT * FROM transportadora_estado WHERE sigla = 'SP';
+SELECT * FROM transportadora_estado;
+DROP VIEW transportadora_estado;
 
 --5. A data do pedido, o valor, o nome da transportadora, o nome do cliente e o nome do vendedor dos pedidos.
 CREATE VIEW pedidos as
@@ -83,11 +90,15 @@ SELECT
 	prd.nome AS produto,
 	pdp.quantidade AS quantidade,
 	prd.valor AS valor_unitario,
-	(SELECT sum(valor) FROM pedido pdd WHERE pdd.idpedido = pdp.idpedido) AS "total"
+	pdd.valor AS total
 FROM pedido_produto pdp
-LEFT JOIN produto prd ON pdp.idproduto = prd.idproduto;
+LEFT JOIN produto prd ON pdp.idproduto = prd.idproduto
+LEFT JOIN pedido pdd ON pdp.idpedido = pdd.idpedido;
 
 SELECT * FROM somatoria_pedido WHERE total < 1000;
+SELECT * FROM somatoria_pedido;
+
+DROP VIEW somatoria_pedido;
 
 
 
