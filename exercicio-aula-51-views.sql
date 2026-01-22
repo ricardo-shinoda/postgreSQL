@@ -63,5 +63,18 @@ LEFT JOIN uf u ON u.iduf = (SELECT ufid FROM municipio mun WHERE trn.idmunicipio
 SELECT * FROM transportadora_estado WHERE sigla = 'SP';
 
 --5. A data do pedido, o valor, o nome da transportadora, o nome do cliente e o nome do vendedor dos pedidos.
---
+CREATE VIEW pedidos as
+SELECT
+	pdd.data_pedido AS data_pedido,
+	pdd.valor AS valor,
+	trs.nome AS transportadora,
+	cln.nome AS cliente,
+	vdd.nome AS vendedor
+FROM pedido pdd
+LEFT JOIN transportadora trs ON trs.idtransportadora = pdd.idtransportadora
+LEFT JOIN cliente cln ON cln.idcliente = pdd.idcliente
+LEFT JOIN vendedor vdd ON vdd.idvendedor = pdd.idvendedor;
+
+SELECT * FROM pedidos WHERE vendedor = 'Maria';
+
 --6. O nome do produto, a quantidade, o valor unitário e o valor total dos produtos do pedido.
