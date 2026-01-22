@@ -1,18 +1,17 @@
 -- Views
--- Substituir joins
+-- Replace joins
 
-CREATE VIEW cliente_profissao AS
+CREATE VIEW customer_profession AS
 SELECT
-	cln.nome AS nome,
-	prf.nome AS profissao
-FROM cliente cln
+    c.full_name AS customer_name,
+    p.name AS profession
+FROM customer c
 LEFT JOIN
-	 profissao prf ON cln.idprofissao = prf.idprofissao;
+     profession p ON c.profession_id = p.profession_id;
 
--- Para mostrar a view, fazer como se ela fosse uma tabela:
+-- To show the view, use it as if it were a table:
 
-SELECT * FROM cliente_profissao WHERE Nome = 'Amanda';
+SELECT * FROM customer_profession WHERE customer_name = 'Amanda';
 
-
--- Para deletear uma view
-DROP VIEW cliente_profissao;
+-- To delete a view
+DROP VIEW customer_profession;

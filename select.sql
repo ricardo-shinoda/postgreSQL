@@ -1,107 +1,106 @@
-SELECT * FROM cliente;
+SELECT * FROM customer;
 
---Renomeando uma coluna
-SELECT nome, data_nascimento AS "Data de nascimento" FROM cliente;
+-- Renaming a column
+SELECT full_name, birth_date AS "Birth date" FROM customer;
 
--- concatenando dois campos
-SELECT 'CPF: ' || cpf || ' RG: ' || rg AS "CPF e RG" FROM cliente;
+-- Concatenating two fields
+SELECT 'CPF: ' || cpf || ' RG: ' || rg AS "CPF and RG" FROM customer;
 
--- Limitando a quantidade mostrada - somente os 5
-SELECT * FROM cliente LIMIT	5;
+-- Limiting the quantity shown - only the first 5
+SELECT * FROM customer LIMIT 5;
 
--- Trazer os cliente que nasceram apos uma data
-SELECT * FROM cliente WHERE data_nascimento > '2001-01-01';
+-- Bring customers born after a certain date
+SELECT * FROM customer WHERE birth_date > '2001-01-01';
 
--- Cliente com o nome começa com C
-SELECT * FROM cliente WHERE nome LIKE 'C%';
+-- Customers whose name starts with C
+SELECT * FROM customer WHERE full_name LIKE 'C%';
 
--- Cliente que contenha a letra C no meio
-SELECT * FROM cliente WHERE nome LIKE	'%c%';
+-- Customers containing the letter C in the middle
+SELECT * FROM customer WHERE full_name LIKE '%c%';
 
--- Trazendo os clientes em ordem alfabética
-SELECT * FROM cliente ORDER BY nome;
+-- Bringing customers in alphabetical order
+SELECT * FROM customer ORDER BY full_name;
 
--- Trazendo os clientes em ordem alfabética decrescente
-SELECT * FROM cliente ORDER BY nome DESC;
+-- Bringing customers in descending alphabetical order
+SELECT * FROM customer ORDER BY full_name DESC;
 
---1. O nome, o gênero e a profissão de todos os clientes, ordenado pelo nome em ordem decrescente
-SELECT * FROM cliente;
+--1. Name, gender and profession of all customers, ordered by name in descending order
+SELECT * FROM customer;
 
---2. Os clientes que tenham a letra “R” no nome
+--2. Customers who have the letter "R" in their name
 --
---3. Os clientes que o nome inicia com a letra “C”
+--3. Customers whose name starts with the letter "C"
 --
---4. Os clientes que o nome termina com a letra “A”
+--4. Customers whose name ends with the letter "A"
 --
---5. Os clientes que moram no bairro “Centro”
+--5. Customers who live in the "Centro" neighborhood
 --
---6. Os clientes que moram em complementos que iniciam com a letra “A”
+--6. Customers who live in address complements that start with the letter "A"
 --
---7. Somente os clientes do sexo feminino
+--7. Only female customers
 --
---8. Os clientes que não informaram o CPF
+--8. Customers who did not provide CPF
 --
---9. O nome e a profissão dos clientes, ordenado em ordem crescente pelo nome da profissão
+--9. Name and profession of customers, ordered in ascending order by profession name
 --
---10. Os clientes de nacionalidade “Brasileira”
+--10. Customers with "Brazilian" nationality
 --
---11. Os clientes que informaram o número da residência
+--11. Customers who provided the house number
 --
---12. Os clientes que moram em Santa Catarina
+--12. Customers who live in Santa Catarina
 --
---13. Os clientes que nasceram entre 01/01/2000 e 01/01/2002
+--13. Customers born between 01/01/2000 and 01/01/2002
 --
---14. O nome do cliente e o logradouro, número, complemento, bairro, município e UF concatenado de todos os clientes
+--14. Customer name and concatenated street address, number, complement, neighborhood, city and state of all customers
 
 
--- Comandos Adicionais
+-- Additional Commands
 
--- Extraindo dia, mês ou ano de uma data.
+-- Extracting day, month or year from a date
 
-SELECT * FROM pedido;
+SELECT * FROM orders;
 SELECT
-	data_pedido AS "Data do pedido",
-	EXTRACT (DAY FROM data_pedido) AS "Dia",
-	EXTRACT(MONTH FROM data_pedido) AS "Mês",
-	EXTRACT(YEAR FROM data_pedido) AS "Ano"
-FROM pedido;
+    order_date AS "Order date",
+    EXTRACT(DAY FROM order_date) AS "Day",
+    EXTRACT(MONTH FROM order_date) AS "Month",
+    EXTRACT(YEAR FROM order_date) AS "Year"
+FROM orders;
 
 
--- Extraindo caracteres de uma string
-
-SELECT
-	nome,
-	substring(nome FROM 1 FOR 3) AS "Somente esses", -- Somente do 1 ao 3 caractarer
-	substring(nome, 4) AS "Sem os primeiros" -- A partir do quarto
-FROM cliente;
-
-
--- Transformando tudo em maiúsculo
+-- Extracting characters from a string
 
 SELECT
-	nome,
-	UPPER(nome)
-FROM cliente;
+    full_name,
+    SUBSTRING(full_name FROM 1 FOR 3) AS "Only these", -- Only from 1st to 3rd character
+    SUBSTRING(full_name FROM 4) AS "Without the first ones" -- Starting from the fourth
+FROM customer;
 
 
--- Adicionando uma mensagem ao campo NULL
-
-
-SELECT
-	nome,
-	COALESCE(cpf, 'CPF não informado')
-FROM cliente;
-
-
--- Condicional CASE
-
-SELECT * FROM uf;
+-- Converting everything to uppercase
 
 SELECT
-	sigla,
-	CASE sigla
-		WHEN 'RJ' THEN 'Rio de Janeiro'
-		WHEN 'SP' THEN 'SÃO PAULO'
-	ELSE 'Outros'
-	END AS "Nome do estado"
-FROM uf;
+    full_name,
+    UPPER(full_name)
+FROM customer;
+
+
+-- Adding a message to NULL fields
+
+SELECT
+    full_name,
+    COALESCE(cpf, 'CPF not informed')
+FROM customer;
+
+
+-- Conditional CASE
+
+SELECT * FROM state;
+
+SELECT
+    abbreviation,
+    CASE abbreviation
+        WHEN 'RJ' THEN 'Rio de Janeiro'
+        WHEN 'SP' THEN 'SÃO PAULO'
+        ELSE 'Other'
+    END AS "State name"
+FROM state;

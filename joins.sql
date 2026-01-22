@@ -1,33 +1,32 @@
--- TRABALHANDO COM JOINS
+-- WORKING WITH JOINS
 
 -- LEFT OUTER JOIN
--- traz todos os cliente com ou sem profissão
+-- brings all customers with or without profession
 
 SELECT 
-	cln.nome AS cliente,
-	prf.nome AS profissao
+    c.full_name AS customer,
+    p.name AS profession
 FROM 
-	cliente AS cln
-LEFT OUTER JOIN -- Traz todos os valores se há ou não relacionamento.
-	profissao AS prf ON cln.idprofissao = prf.idprofissao;
+    customer AS c
+LEFT OUTER JOIN -- Brings all values whether there is a relationship or not.
+    profession AS p ON c.profession_id = p.profession_id;
 
 -- INNER JOIN
--- traz somente os clientes que possuem profissao
+-- brings only customers who have a profession
 SELECT 
-	cln.nome AS cliente,
-	prf.nome AS profissao
+    c.full_name AS customer,
+    p.name AS profession
 FROM 
-	cliente AS cln
-INNER JOIN -- obriga que exista o relacionamento (valores) entre os dois componentes
-	profissao AS prf ON cln.idprofissao = prf.idprofissao;
-
+    customer AS c
+INNER JOIN -- Requires that there is a relationship (values) between the two components
+    profession AS p ON c.profession_id = p.profession_id;
 
 -- RIGHT OUTER JOIN
--- traz somente as profissões que possuem relacionamento com os cliente.
+-- brings only professions that have a relationship with customers.
 SELECT 
-	cln.nome AS cliente,
-	prf.nome AS profissao
+    c.full_name AS customer,
+    p.name AS profession
 FROM 
-	cliente AS cln
-RIGHT OUTER JOIN -- obriga que exista o relacionamento (valores) entre os dois componentes
-	profissao AS prf ON cln.idprofissao = prf.idprofissao;
+    customer AS c
+RIGHT OUTER JOIN -- Requires that there is a relationship (values) between the two components
+    profession AS p ON c.profession_id = p.profession_id;
