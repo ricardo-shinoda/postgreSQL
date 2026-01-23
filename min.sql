@@ -1,5 +1,5 @@
 -- o valor minimo
---SELECT min(valor) FROM pedido;
+SELECT min(total_value) FROM orders;
 
---SELECT min(valor), max(valor) FROM pedido;
+SELECT min(total_value), max(total_value) FROM orders;
 
