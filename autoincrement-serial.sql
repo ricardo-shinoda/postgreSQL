@@ -26,17 +26,3 @@ CREATE SEQUENCE address_complement_complement_id_seq;
 -- 2. Set sequence to start after current max value IMPORTANT: check if this is bringing the correct next id
 SELECT setval('address_complement_complement_id_seq', 
 	COALESCE((SELECT MAX(complement_id) FROM address_complement), 0) + 1);
-
-
--- Adding autoincrement function to a column in table
-SELECT * FROM city;
-
-SELECT max(city_id) + 1 FROM city;
-CREATE SEQUENCE city_id_seq MINVALUE 11;
-ALTER TABLE city ALTER city_id SET DEFAULT nextval('city_id_seq');
-ALTER SEQUENCE city_id_seq OWNED BY city.city_id;
-
-INSERT INTO city (name) VALUES ('Bauru');
-UPDATE city SET state_id = 2 WHERE name = 'Bauru';
-
-INSERT INTO address_complement (name) VALUES ('Cabin');
