@@ -16,7 +16,6 @@ ALTER SEQUENCE complement_id_seq OWNED BY address_complement.complement_id;
 -- Testing
 INSERT INTO address_complement (name) VALUES ('Cabin');
 
-
 --c. Supplier
 SELECT max(supplier_id) + 1 FROM supplier;
 CREATE SEQUENCE supplier_id_seq MINVALUE 5;
