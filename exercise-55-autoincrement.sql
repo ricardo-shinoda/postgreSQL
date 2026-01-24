@@ -1,5 +1,4 @@
 -- Auto increment exercise
-
 --1. Create sequences for all other tables in the database
 
 --a. Customer
@@ -8,8 +7,13 @@ CREATE SEQUENCE customer_id_seq MINVALUE 17;
 ALTER TABLE customer ALTER customer_id SET DEFAULT nextval('customer_id_seq');
 ALTER SEQUENCE customer_id_seq OWNED BY customer.customer_id;
 
---b Adding autoincrement function to a column in table complement
+--b. Address complement
+SELECT max(complement_id) + 1 FROM address_complement;
+CREATE SEQUENCE complement_id_seq MINVALUE 5;
+ALTER TABLE address_complement ALTER complement_id nextval('complement_id_seq';)
+ALTER SEQUENCE complement_id_seq OWNED BY address_complement.complement_id;
 
+-- Testing
 INSERT INTO address_complement (name) VALUES ('Cabin');
 
 
@@ -19,7 +23,7 @@ CREATE SEQUENCE supplier_id_seq MINVALUE 5;
 ALTER TABLE supplier ALTER supplier_id SET DEFAULT nextval('supplier_id_seq');
 ALTER SEQUENCE supplier_id_seq OWNED BY supplier.supplier_id;
 
--- testing
+-- Testing
 INSERT INTO supplier (company_name, contact_name, phone, email, city_id)
 VALUES ('Linux', 'Lucas Shinoda', '(14)0000-1111', 'lucas@nasa.com', 4);
 
@@ -70,7 +74,7 @@ CREATE SEQUENCE state_id_seq MINVALUE 7;
 ALTER TABLE state ALTER state_id SET DEFAULT nextval('state_id_seq');
 ALTER SEQUENCE state_id_seq OWNED BY state.state_id;
 
---testing
+-- Testing
 SELECT * FROM state;
 INSERT INTO state (name, abbreviation)
 VALUES ('Bahia', 'BH');
