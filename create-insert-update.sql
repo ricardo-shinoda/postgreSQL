@@ -273,7 +273,6 @@ CREATE TABLE pedido (
 	CONSTRAINT fk_pdd_idvendedor FOREIGN KEY (idvendedor) REFERENCES vendedor (idvendedor)
 );
 
-
 -- Inserindo os dados nas tabelas
 
 INSERT INTO pedido (idpedido, data_pedido, valor, idcliente, idtransportadora, idvendedor)

@@ -99,16 +99,25 @@ VALUES
 ('Pablo Dalloglio ');
 
 --8. Create a table called BOOK, according to the data below:
---
 --| Field        | Observations                                        |
 --|--------------|-----------------------------------------------------|
 --| BookId       | Integer, not null, primary key and auto increment   |
 --| PublisherId  | Integer, not null and foreign key to PUBLISHER table |
 --| CategoryId   | Integer, not null and foreign key to CATEGORY table  |
 --| Name         | Character, not null and unique                      |
---
+
+CREATE TABLE book (
+	book_id serial NOT NULL,
+	publisher_id integer NOT NULL,
+	category_id integer NOT NULL,
+	name varchar(50) NOT NULL,
+	CONSTRAINT pk_book_book_id PRIMARY KEY (book_id),
+	CONSTRAINT fk_book_publisher_id FOREIGN KEY (publisher_id) REFERENCES publisher (publisher_id),
+	CONSTRAINT fk_book_category_id FOREIGN KEY (category_id) REFERENCES category (category_id),
+	CONSTRAINT un_book_name UNIQUE (name)
+);
+
 --9. Insert the data below into the BOOK table.
---
 --| PublisherId | CategoryId | Name                                       |
 --|-------------|------------|--------------------------------------------|
 --| Edgard Blusher | Database   | Database – 1st Edition                     |
@@ -119,15 +128,33 @@ VALUES
 --| Nova Terra  | HTML       | XHTML: Reference Guide for Web Development |
 --| Bookman     | PHP        | PHP for Professional Development           |
 --| Edgard Blusher | PHP        | PHP with Object-Oriented Programming       |
---
+
+INSERT INTO book (publisher_id, category_id, name)
+VALUES 
+(2, 1, 'Database – 1st Edition'),
+(1, 1, 'Oracle Database 11G Administration'),
+(3, 3, 'Computer Programming in Java'),
+(4, 3, 'Aspect-Oriented Programming in Java'),
+(4, 2, 'HTML5 – Practical Guide'),
+(3, 2, 'XHTML: Reference Guide for Web Development'),
+(1, 4, 'PHP for Professional Development'),
+(2, 4, 'PHP with Object-Oriented Programming');
+
 --10. Create a table called BOOK_AUTHOR, according to the data below:
---
 --| Field     | Observations                                          |
 --|-----------|-------------------------------------------------------|
 --| BookId    | Integer, not null and foreign key to BOOK table       |
 --| AuthorId  | Integer, not null and foreign key to AUTHOR table     |
---| Composite primary key with fields BookId and AuthorId  |11. Insert the data below into the BOOK_AUTHOR table.
---
+--| Composite primary key with fields BookId and AuthorId  
+
+CREATE TABLE book_author (
+	book_id integer NOT NULL,
+	author_id integer NOT NULL,
+	composite integer,
+	CONSTRAINT fk_book_author_book_id FOREIGN KEY (book_id) REFERENCES book (book_id),
+);
+
+--|11. Insert the data below into the BOOK_AUTHOR table.
 --| BookId                           | AuthorId                |
 --|----------------------------------|-------------------------|
 --| Database – 1st Edition           | Waldemar Setzer         |
