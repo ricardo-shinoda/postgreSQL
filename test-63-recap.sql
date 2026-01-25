@@ -1,6 +1,7 @@
 -- Practical evaluation – Database
 
 --1. Create a database called LIBRARY.
+CREATE DATABASE lybrary;
 
 --2. Create a table called PUBLISHER, according to the data below:
 
