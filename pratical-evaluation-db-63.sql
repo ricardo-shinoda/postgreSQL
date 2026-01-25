@@ -60,14 +60,18 @@ VALUES
 ('PHP');
 
 --6. Create a table called AUTHOR, according to the data below:
---
 --| Field    | Observations                        |
 --|----------|-------------------------------------|
 --| AuthorId | Integer, not null, primary key and auto increment |
 --| Name     | Character and not null              |
---
+
+CREATE TABLE author (
+	author_id serial NOT NULL,
+	name varchar(50) NOT NULL,
+	CONSTRAINT pk_author_name PRIMARY KEY (author_id)
+);
+
 --7. Insert the data below into the AUTHOR table.
---
 --| Name                      |
 --|---------------------------|
 --| Waldemar Setzer           |
@@ -80,8 +84,20 @@ VALUES
 --| Ian Graham                |
 --| Fabrício Xavier           |
 --| Pablo Dalloglio           |
---
---
+
+INSERT INTO author (name)
+VALUES
+('Waldemar Setzer'),
+('Flávio Soares'),
+('John Watson'),
+('Rui Rossi dos Santos'),
+('Antonio Pereira de Resende'),
+('Claudiney Calixto Lima'),
+('Evandro Carlos Teruel '),
+('Ian Graham '),
+('Fabrício Xavier'),
+('Pablo Dalloglio ');
+
 --8. Create a table called BOOK, according to the data below:
 --
 --| Field        | Observations                                        |
