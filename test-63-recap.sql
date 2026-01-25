@@ -4,37 +4,61 @@
 CREATE DATABASE lybrary;
 
 --2. Create a table called PUBLISHER, according to the data below:
-
 --| Field      | Observations                        |
 --|------------|-------------------------------------|
 --| PublisherId | Integer, not null, primary key and auto increment |
 --| Name       | Character, not null and unique      |
---
+
+CREATE TABLE publisher (
+	publisher_id serial NOT NULL,
+	name varchar(50) NOT NULL,
+	CONSTRAINT pk_publisher_publisher_id PRIMARY KEY (publisher_id),
+	CONSTRAINT un_publisher_name UNIQUE (name)
+);
+
 --3. Insert the data below into the PUBLISHER table.
---
 --| Name           |
 --|----------------|
 --| Bookman        |
 --| Edgard Blusher |
 --| Nova Terra     |
 --| Brasport       |
---
+
+INSERT INTO publisher (name)
+VALUES
+('Bookman'),
+('Edgard Blusher'),
+('Nova Terra'),
+('Brasport');
+
 --4. Create a table called CATEGORY, according to the data below:
---
 --| Field       | Observations                        |
 --|-------------|-------------------------------------|
 --| CategoryId  | Integer, not null, primary key and auto increment |
 --| Name        | Character, not null and unique      |
---
+
+CREATE TABLE category(
+	category_id serial NOT NULL,
+	name varchar(50) NOT NULL,
+	CONSTRAINT pk_category_category_id PRIMARY KEY (category_id),
+	CONSTRAINT un_category_name UNIQUE (name)
+);
+
 --5. Insert the data below into the CATEGORY table.
---
 --| Name           |
 --|----------------|
 --| Database       |
 --| HTML           |
 --| Java           |
 --| PHP            |
---
+
+INSERT INTO category (name)
+VALUES
+('Database'),
+('HTML'),
+('Java'),
+('PHP');
+
 --6. Create a table called AUTHOR, according to the data below:
 --
 --| Field    | Observations                        |
