@@ -185,14 +185,18 @@ VALUES
 SELECT * FROM book_author;
 
 --12. Create a table called STUDENT, according to the data below:
---
 --| Field     | Observations                                        |
 --|-----------|-----------------------------------------------------|
 --| StudentId | Integer, not null, primary key and auto increment   |
 --| Name      | Character and not null                              |
---
+
+CREATE TABLE student (
+	student_id serial NOT NULL,
+	name varchar(50) NOT NULL,
+	CONSTRAINT pk_student_student_id PRIMARY KEY (student_id)
+);
+
 --13. Insert the data below into the STUDENT table.
---
 --| Name   |
 --|--------|
 --| Mario  |
@@ -200,9 +204,16 @@ SELECT * FROM book_author;
 --| Paulo  |
 --| Pedro  |
 --| Maria  |
---
+
+INSERT INTO student (name)
+VALUES
+('Mario'),
+('João'),
+('Paulo'),
+('Pedro'),
+('Maria');
+
 --14. Create a table called LOAN, according to the data below:
---
 --| Field          | Observations                                        |
 --|----------------|-----------------------------------------------------|
 --| LoanId         | Integer, not null, primary key and auto increment   |
@@ -211,9 +222,19 @@ SELECT * FROM book_author;
 --| Return_Date    | Date and not null                                   |
 --| Value          | Decimal and not null                                |
 --| Returned       | Character and not null (only one character)         |
---
+
+CREATE TABLE loan (
+	loan_id serial NOT NULL,
+	student_id integer NOT NULL,
+	loan_date date NOT NULL DEFAULT current_date,
+	return_date date NOT NULL,
+	value numeric(10,2) NOT NULL,
+	returned char(1) NOT NULL,
+	CONSTRAINT pk_loan_loan_id PRIMARY KEY (loan_id),
+	CONSTRAINT fk_loan_student_id FOREIGN KEY (student_id) REFERENCES student (student_id)
+);
+
 --15. Insert the data below into the LOAN table.
---
 --| StudentId | Loan_Date | Return_Date | Value | Returned |
 --|-----------|-----------|-------------|-------|----------|
 --| Mario     | 2012-05-02 | 2012-05-12  | 10.00 | Y        |
@@ -223,17 +244,33 @@ SELECT * FROM book_author;
 --| Pedro     | 2012-05-05 | 2012-05-15  | 15.00 | N        |
 --| Pedro     | 2012-05-07 | 2012-05-17  | 20.00 | Y        |
 --| Pedro     | 2012-05-08 | 2012-05-18  | 5.00  | Y        |
---
+
+INSERT INTO loan (student_id, loan_date, return_date, value, returned)
+VALUES
+(1, '2012-05-02', '2012-05-12', 10.00, 'Y'),
+(1, '2012-04-23', '2012-05-03', 5.00, 'N'),
+(2, '2012-05-10', '2012-05-20', 12.00, 'N'),
+(3, '2012-05-10', '2012-05-20', 8.00, 'Y'),
+(4, '2012-05-05', '2012-05-15', 15.00, 'N'),
+(4, '2012-05-07', '2012-05-17', 20.00, 'Y'),
+(4, '2012-05-08', '2012-05-18', 5.00, 'Y');
+
+
 --16. Create a table called LOAN_BOOK, according to the data below:
---
 --| Field       | Observations                                          |
 --|-------------|-------------------------------------------------------|
 --| LoanId      | Integer, not null, foreign key to LOAN table          |
 --| BookId      | Integer, not null and foreign key to BOOK table       |
 --| Composite primary key with fields LoanId and BookId    |
---
+
+CREATE TABLE loan_book (
+	loan_id integer NOT NULL,
+	book_id integer NOT NULL,
+	CONSTRAINT pk_loan_book_loan_id_book_id PRIMARY KEY (loan_id, book_id)
+);
+
+
 --17. Insert the data below into the LOAN_BOOK table.
---
 --| LoanId                    | BookId                                  |
 --|---------------------------|-----------------------------------------|
 --| Mario's first loan        | Database – 1st Edition                  |
@@ -246,15 +283,29 @@ SELECT * FROM book_author;
 --| Pedro's second loan       | XHTML: Reference Guide for Web Development |
 --| Pedro's second loan       | Database – 1st Edition                  |
 --| Pedro's third loan        | PHP with Object-Oriented Programming    |
---
+
+INSERT INTO loan_book (loan_id, book_id)
+VALUES
+(1, 1),
+(2, 4),
+(2, 3),
+(3, 2),
+(4, 7),
+(5, 5),
+(6, 4),
+(7, 6),
+(7, 1),
+(8, 8);
+
 --18. Create the following indexes:
---
 --| Table   | Field        |
 --|---------|--------------|
 --| Loan    | Loan_Date    |
 --| Loan    | Return_Date  |
---
---
+
+CREATE INDEX idx_loan_loan_date ON loan (loan_date);
+CREATE INDEX idx_loan_return_date ON loan (return_date);
+
 --SIMPLE QUERIES
 --
 --19. Names of authors in alphabetical order.
