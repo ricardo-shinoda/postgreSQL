@@ -307,10 +307,16 @@ CREATE INDEX idx_loan_loan_date ON loan (loan_date);
 CREATE INDEX idx_loan_return_date ON loan (return_date);
 
 --SIMPLE QUERIES
---
+
 --19. Names of authors in alphabetical order.
+SELECT name FROM author ORDER BY name ASC;
+
 --20. Names of students that start with the letter P.
+SELECT name FROM student WHERE name LIKE 'P%';
+
 --21. Names of books in the Database or Java category.
+
+
 --22. Names of books from the Bookman publisher.
 --23. Loans made between 05/05/2012 and 10/05/2012.
 --24. Loans that were not made between 05/05/2012 and 10/05/2012.
