@@ -150,8 +150,9 @@ VALUES
 CREATE TABLE book_author (
 	book_id integer NOT NULL,
 	author_id integer NOT NULL,
-	composite integer,
 	CONSTRAINT fk_book_author_book_id FOREIGN KEY (book_id) REFERENCES book (book_id),
+	CONSTRAINT fk_book_author_author_id FOREIGN KEY (author_id) REFERENCES author (author_id),
+	CONSTRAINT pk_book_author_book_id_author_id PRIMARY KEY (book_id, author_id)
 );
 
 --|11. Insert the data below into the BOOK_AUTHOR table.
@@ -167,7 +168,22 @@ CREATE TABLE book_author (
 --| XHTML: Reference Guide for Web Development | Ian Graham    |
 --| PHP for Professional Development | Fabrício Xavier         |
 --| PHP with Object-Oriented Programming | Pablo Dalloglio      |
---
+
+INSERT INTO book_author (book_id, author_id)
+VALUES 
+(1, 1),
+(1, 2),
+(2, 3),
+(3, 4),
+(4, 5),
+(4, 6),
+(5, 7),
+(6, 8),
+(7, 9),
+(8, 10);
+
+SELECT * FROM book_author;
+
 --12. Create a table called STUDENT, according to the data below:
 --
 --| Field     | Observations                                        |
