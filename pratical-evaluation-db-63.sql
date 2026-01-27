@@ -255,7 +255,6 @@ VALUES
 (4, '2012-05-07', '2012-05-17', 20.00, 'Y'),
 (4, '2012-05-08', '2012-05-18', 5.00, 'Y');
 
-
 --16. Create a table called LOAN_BOOK, according to the data below:
 --| Field       | Observations                                          |
 --|-------------|-------------------------------------------------------|
@@ -268,7 +267,6 @@ CREATE TABLE loan_book (
 	book_id integer NOT NULL,
 	CONSTRAINT pk_loan_book_loan_id_book_id PRIMARY KEY (loan_id, book_id)
 );
-
 
 --17. Insert the data below into the LOAN_BOOK table.
 --| LoanId                    | BookId                                  |
@@ -320,6 +318,10 @@ SELECT
 FROM book WHERE category_id IN (1, 3);
 
 --22. Names of books from the Bookman publisher.
+SELECT
+	name
+FROM book WHERE publisher_id = 1;
+
 --23. Loans made between 05/05/2012 and 10/05/2012.
 --24. Loans that were not made between 05/05/2012 and 10/05/2012.
 --25. Loans where books have already been returned.
