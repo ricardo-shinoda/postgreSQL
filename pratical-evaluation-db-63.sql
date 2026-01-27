@@ -323,6 +323,8 @@ SELECT
 FROM book WHERE publisher_id = 1;
 
 --23. Loans made between 05/05/2012 and 10/05/2012.
+SELECT * FROM loan WHERE loan_date BETWEEN '2012-05-05' AND '2012-05-10';
+
 --24. Loans that were not made between 05/05/2012 and 10/05/2012.
 --25. Loans where books have already been returned.
 --
