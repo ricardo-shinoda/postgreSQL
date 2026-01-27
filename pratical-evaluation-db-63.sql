@@ -314,8 +314,10 @@ SELECT name FROM author ORDER BY name ASC;
 --20. Names of students that start with the letter P.
 SELECT name FROM student WHERE name LIKE 'P%';
 
---21. Names of books in the Database or Java category.
-
+--21. Names of books in the Database (1) or Java (3) category.
+SELECT
+	name,
+FROM book WHERE category_id IN (1, 3);
 
 --22. Names of books from the Bookman publisher.
 --23. Loans made between 05/05/2012 and 10/05/2012.
