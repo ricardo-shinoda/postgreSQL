@@ -332,27 +332,93 @@ SELECT * FROM loan WHERE loan_date NOT BETWEEN '2012-05-05' AND '2012-05-10';
 SELECT * FROM loan WHERE returned LIKE 'Y';
 
 --SIMPLE AGGREGATION QUERIES
---
+
 --26. Number of books.
+SELECT count(book_id) FROM book;
+
 --27. Sum of loan values.
+SELECT sum(value) FROM loan;
+
 --28. Average loan value.
+SELECT avg(value) FROM loan;
+
 --29. Maximum loan value.
+SELECT max(value) FROM loan;
+
 --30. Minimum loan value.
+SELECT min(value) FROM loan;
+
 --31. Sum of loan values that are between 05/05/2012 and 10/05/2012.
+SELECT sum(value) FROM loan WHERE loan_date BETWEEN '2012-05-05' AND '2012-10-05';
+
 --32. Number of loans that are between 01/05/2012 and 05/05/2012.
---
+SELECT count(loan_id) FROM loan WHERE loan_date BETWEEN '2012-05-05' AND '2012-10-05';
+
 --JOIN QUERIES
---
+
 --33. Book name, category and publisher (BOOK) – create a view.
+CREATE VIEW book_category_publisher as
+SELECT
+	bok.name AS name,
+	cat.name AS category,
+	pub.name AS publisher
+FROM book bok
+LEFT JOIN category cat ON cat.category_id = bok.category_id
+LEFT JOIN publisher pub ON pub.publisher_id = bok.publisher_id;
+
+SELECT * FROM book_category_publisher;
+
 --34. Book name and author name (BOOK_AUTHOR) – create a view.
+CREATE VIEW book_author_name as
+SELECT
+	bok.name AS book_name,
+	aut.name AS author_name
+FROM book_author bka
+LEFT JOIN book bok ON bok.book_id = bka.book_id
+LEFT JOIN author aut ON aut.author_id = bka.author_id;
+
+SELECT * FROM book_author_name;
+
 --35. Names of books by author Ian Graham (BOOK_AUTHOR).
+CREATE VIEW book_author_ian_graham as
+SELECT
+	bok.name AS book_name,
+	aut.name AS author_name
+FROM book_author bka
+INNER JOIN book bok ON bok.book_id = bka.book_id
+INNER JOIN author aut ON aut.author_id = bka.author_id
+AND bka.author_id = 8;
+
+SELECT * FROM book_author_ian_graham;
+
 --36. Student name, loan date and return date (LOAN).
+SELECT
+	stu.name AS student_name,
+	loa.loan_date,
+	loa.return_date
+FROM loan loa
+LEFT JOIN student stu ON stu.student_id = loa.student_id;
+
 --37. Names of all books that were loaned (LOAN_BOOK).
---
+SElECT
+	bok.name AS book_name,
+	lob.loan_id
+FROM loan_book lob
+LEFT JOIN book bok ON bok.book_id = lob.book_id;
+
 --AGGREGATION + JOIN QUERIES
 --
 --38. Publisher name and number of books from each publisher (BOOK).
+SELECT
+	pub.name AS publisher_name,
+	count(boo.book_id) AS number_book
+FROM book boo
+LEFT JOIN publisher pub ON pub.publisher_id = boo.publisher_id
+GROUP BY pub.name;
+
 --39. Category name and number of books in each category (BOOK).
+
+
 --40. Author name and number of books by each author (BOOK_AUTHOR).
 --41. Student name and number of loans per student (LOAN_BOOK).
 --42. Student name and sum of total loan value per student (LOAN).
