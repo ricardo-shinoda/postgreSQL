@@ -425,7 +425,21 @@ LEFT JOIN category cat ON cat.category_id = bok.category_id
 GROUP BY cat.category_id;
 
 --40. Author name and number of books by each author (BOOK_AUTHOR).
+SELECT * FROM book_author;
+SELECT * FROM book;
+
 --41. Student name and number of loans per student (LOAN_BOOK).
+SELECT * FROM student;
+SELECT * FROM loan_book;
+SELECT * FROM loan;
+
+SELECT 
+	std.name AS student_name,
+	count(loa.loan_id) AS count_loan
+FROM student std
+LEFT JOIN loan loa ON std.student_id  = loa.student_id
+GROUP BY std.name;
+
 --42. Student name and sum of total loan value per student (LOAN).
 --43. Student name and sum of total loan value per student only for those where the sum is greater than 7.00 (LOAN).
 --
