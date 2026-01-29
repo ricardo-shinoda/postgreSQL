@@ -417,7 +417,12 @@ LEFT JOIN publisher pub ON pub.publisher_id = boo.publisher_id
 GROUP BY pub.name;
 
 --39. Category name and number of books in each category (BOOK).
-
+SELECT 
+	cat.name AS category_name,
+	count(bok.category_id) AS count_category
+FROM book bok
+LEFT JOIN category cat ON cat.category_id = bok.category_id
+GROUP BY cat.category_id;
 
 --40. Author name and number of books by each author (BOOK_AUTHOR).
 --41. Student name and number of loans per student (LOAN_BOOK).
