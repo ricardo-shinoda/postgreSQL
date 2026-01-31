@@ -482,6 +482,10 @@ SELECT
 FROM loan;
 
 --47. Only characters 5 to 10 of author names.
+SELECT
+	substring(name FROM 5 FOR 10) AS "Characters from 5 to 10 from names"
+FROM author;
+
 --48. Loan value and only the month of the loan date. Write "January", "February", etc.
 --
 --SUBQUERIES
