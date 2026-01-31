@@ -465,7 +465,22 @@ SELECT
 FROM student ORDER BY name ASC;
 
 --45. Loans that were made in month 04 of 2012.
+SELECT * FROM loan;
+
+SELECT
+	*
+FROM loan
+WHERE loan_date BETWEEN '2012-04-01' AND '2012-04-30';
+
 --46. All loan fields. If already returned, show message "Return complete", otherwise "Overdue".
+SELECT
+	*,
+	CASE returned
+		WHEN 'Y' THEN 'Returned Complete'
+		ELSE 'Overdue'
+	END "Returned"
+FROM loan;
+
 --47. Only characters 5 to 10 of author names.
 --48. Loan value and only the month of the loan date. Write "January", "February", etc.
 --
