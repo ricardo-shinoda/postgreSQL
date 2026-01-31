@@ -495,6 +495,12 @@ FROM loan;
 --SUBQUERIES
 --
 --49. Loan date and value of loans where value is greater than the average of all loans.
+SELECT
+	loan_date,
+	value
+FROM loan
+WHERE value > (SELECT avg(value) FROM loan);
+
 --50. Loan date and value of loans that have more than one book.
 --51. Loan date and value of loans where value is less than the sum of all loans.
 --
