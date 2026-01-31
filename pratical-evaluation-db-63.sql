@@ -510,6 +510,13 @@ FROM loan l
 WHERE (SELECT count(loan_id) FROM loan_book lb WHERE lb.loan_id = l.loan_id) > 1;
 
 --51. Loan date and value of loans where value is less than the sum of all loans.
+SELECT
+	loan_date,
+	value,
+	(SELECT sum(value) FROM loan)
+FROM loan
+WHERE value < (SELECT sum(value) FROM loan);
+
 
 
 
