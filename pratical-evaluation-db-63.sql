@@ -487,7 +487,11 @@ SELECT
 FROM author;
 
 --48. Loan value and only the month of the loan date. Write "January", "February", etc.
---
+SELECT
+	value,
+	to_char(loan_date, 'Month') AS "Loan Month"
+FROM loan;
+
 --SUBQUERIES
 --
 --49. Loan date and value of loans where value is greater than the average of all loans.
