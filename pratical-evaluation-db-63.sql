@@ -458,8 +458,12 @@ WHERE loa.value > 7
 GROUP BY std.name;
 
 --MISCELLANEOUS COMMAND QUERIES
---
+
 --44. Names of all students in descending order and in uppercase.
+SELECT
+	upper(name)
+FROM student ORDER BY name ASC;
+
 --45. Loans that were made in month 04 of 2012.
 --46. All loan fields. If already returned, show message "Return complete", otherwise "Overdue".
 --47. Only characters 5 to 10 of author names.
