@@ -449,7 +449,14 @@ LEFT JOIN loan loa ON loa.student_id = std.student_id
 GROUP BY std.name;
 
 --43. Student name and sum of total loan value per student only for those where the sum is greater than 7.00 (LOAN).
---
+SELECT
+	std.name AS student,
+	sum(loa.value) AS sum_value
+FROM student std
+LEFT JOIN loan loa ON loa.student_id = std.student_id 
+WHERE loa.value > 7
+GROUP BY std.name;
+
 --MISCELLANEOUS COMMAND QUERIES
 --
 --44. Names of all students in descending order and in uppercase.
