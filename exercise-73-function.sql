@@ -55,3 +55,21 @@ SELECT * FROM orders;
 DROP FUNCTION highest;
 
 DROP FUNCTION largest;
+
+-- Extra exercise - Convert all names to capital letter
+
+SELECT * FROM customer;
+SELECT upper(full_name) FROM customer;
+
+CREATE FUNCTION caps(name varchar) RETURNS varchar(50) LANGUAGE plpgsql AS
+$$
+BEGIN
+	return (select upper(full_name) from customer ctm where ctm.full_name = name);
+END;
+$$;
+
+-- testing function:
+SELECT caps('Amanda');
+SELECT caps(full_name) FROM customer;
+
+DROP FUNCTION caps;
