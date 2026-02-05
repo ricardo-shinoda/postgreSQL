@@ -17,3 +17,16 @@ SELECT get_total_value(4);
 DROP FUNCTION get_total_value;
 
 --Create a function called "largest" (or "highest"), which when executed returns the order with the greatest value.
+
+CREATE FUNCTION largest() RETURNS numeric(10,2) LANGUAGE plpgsql AS
+$$
+declare max_value numeric(10,2);
+BEGIN
+	select max(total_value) into max_value from orders;
+	return max_value;
+END;
+$$;
+
+SELECT largest();
+
+DROP FUNCTION largest;
