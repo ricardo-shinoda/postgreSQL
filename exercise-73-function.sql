@@ -28,6 +28,7 @@ SELECT get_value(order_id) FROM orders;
 DROP FUNCTION get_value;
 
 --Create a function called "largest" (or "highest"), which when executed returns the order with the greatest value.
+SELECT * FROM orders WHERE total_value = (SELECT max(total_value) FROM orders);
 
 CREATE FUNCTION largest() RETURNS numeric(10,2) LANGUAGE plpgsql AS
 $$
@@ -39,5 +40,18 @@ END;
 $$;
 
 SELECT largest();
+
+CREATE FUNCTION highest() RETURNS integer LANGUAGE plpgsql AS
+$$
+begin
+	return (select order_id from orders where total_value = (SELECT max(total_value) FROM orders));
+end;
+$$;
+
+SELECT highest();
+
+SELECT * FROM orders;
+
+DROP FUNCTION highest;
 
 DROP FUNCTION largest;
