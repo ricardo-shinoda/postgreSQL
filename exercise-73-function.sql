@@ -16,6 +16,17 @@ SELECT get_total_value(4);
 
 DROP FUNCTION get_total_value;
 
+CREATE FUNCTION get_value(vl_id integer) RETURNS varchar(20) LANGUAGE plpgsql AS 
+$$
+begin
+	return (select value_format(total_value) from orders ord where ord.order_id = vl_id); 
+end;
+$$;
+
+SELECT get_value(order_id) FROM orders;
+
+DROP FUNCTION get_value;
+
 --Create a function called "largest" (or "highest"), which when executed returns the order with the greatest value.
 
 CREATE FUNCTION largest() RETURNS numeric(10,2) LANGUAGE plpgsql AS
