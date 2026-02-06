@@ -73,3 +73,51 @@ SELECT caps('Amanda');
 SELECT caps(full_name) FROM customer;
 
 DROP FUNCTION caps;
+
+-- Create a function that formats CPF: XXX.XXX.XXX-XX
+-- Input: '12345678912' → Output: '123.456.789-12'
+
+SELECT * FROM customer;
+
+CREATE FUNCTION format_cpf(cpf_data varchar) RETURNS varchar(20) LANGUAGE plpgsql AS
+$$
+BEGIN
+	return 
+	concat(substring(cpf_data from 1 for 3),
+	'.',
+	concat(substring(cpf_data from 4 for 3),
+	'.',
+	concat(substring(cpf_data from 7 for 3),
+	'-',
+	concat(substring(cpf_data from 10 for 2)
+))));
+END;
+$$;
+
+
+SELECT
+	cpf,
+	format_cpf(cpf)
+FROM customer;
+
+SELECT cpf FROM customer;
+
+DROP FUNCTION format_cpf;
+
+
+UPDATE customer SET cpf = '12345678909' WHERE customer_id = 1;
+UPDATE customer SET cpf = '98765432100' WHERE customer_id = 2;
+UPDATE customer SET cpf = '11122233396' WHERE customer_id = 3;
+UPDATE customer SET cpf = '44455566677' WHERE customer_id = 4;
+UPDATE customer SET cpf = '77788899912' WHERE customer_id = 5;
+UPDATE customer SET cpf = '00011122235' WHERE customer_id = 6;
+UPDATE customer SET cpf = '33344455568' WHERE customer_id = 7;
+UPDATE customer SET cpf = '66677788891' WHERE customer_id = 8;
+UPDATE customer SET cpf = '99900011123' WHERE customer_id = 9;
+UPDATE customer SET cpf = '22233344456' WHERE customer_id = 10;
+UPDATE customer SET cpf = '55566677789' WHERE customer_id = 11;
+UPDATE customer SET cpf = '88899900001' WHERE customer_id = 12;
+UPDATE customer SET cpf = '12131415163' WHERE customer_id = 13;
+UPDATE customer SET cpf = '25262728294' WHERE customer_id = 14;
+UPDATE customer SET cpf = '37383839304' WHERE customer_id = 15;
+UPDATE customer SET cpf = '49494949485' WHERE customer_id = 16;
