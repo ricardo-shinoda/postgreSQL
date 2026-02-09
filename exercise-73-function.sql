@@ -100,7 +100,7 @@ SELECT
 	format_cpf(cpf)
 FROM customer;
 
-SELECT cpf FROM customer;
+SELECT * FROM customer;
 
 DROP FUNCTION format_cpf;
 
@@ -121,3 +121,10 @@ UPDATE customer SET cpf = '12131415163' WHERE customer_id = 13;
 UPDATE customer SET cpf = '25262728294' WHERE customer_id = 14;
 UPDATE customer SET cpf = '37383839304' WHERE customer_id = 15;
 UPDATE customer SET cpf = '49494949485' WHERE customer_id = 16;
+
+
+SELECT
+	full_name,
+	format_cpf(cpf),
+	birth_date
+FROM customer;

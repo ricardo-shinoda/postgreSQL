@@ -83,3 +83,10 @@ SELECT max(salesperson_id) + 1 FROM salesperson;
 CREATE SEQUENCE salesperson_id_seq MINVALUE 9;
 ALTER TABLE salesperson ALTER salesperson_id SET DEFAULT nextval('salesperson_id_seq');
 ALTER SEQUENCE salesperson_id_seq OWNED BY salesperson.salesperson_id;
+
+
+--l . Neighborhood
+SELECT max(neighborhood_id) +1 FROM neighborhood;
+CREATE SEQUENCE neighborhood_id_seq MINVALUE 5;
+ALTER TABLE neighborhood ALTER neighborhood_id SET DEFAULT nextval('neighborhood_id_seq');
+ALTER SEQUENCE neighborhood_id_seq OWNED BY neighborhood.neighborhood_id;
