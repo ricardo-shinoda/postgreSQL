@@ -34,17 +34,18 @@ BEGIN
 	old.salesperson_id,
 	old.total_value,
 	localtimestamp);
-	return new;
+	return old;
 END;
 $$;
 
 DELETE FUNCTION order_upl;
 
-CREATE OR REPLACE TRIGGER order_upl AFTER DELETE ON orders FOR EACH ROW EXECUTE PROCEDURE order_upl();
+CREATE OR REPLACE TRIGGER order_upl BEFORE DELETE ON orders FOR EACH ROW EXECUTE PROCEDURE order_upl();
 
--- testin trigger
+-- Testing trigger
 
 SELECT * FROM deleted_order;
 SELECT * FROM orders;
 
-DELETE FROM orders WHERE order_id = 17;
+-- By running this command it will trigger the procedure function
+DELETE FROM orders WHERE order_id = 16;
