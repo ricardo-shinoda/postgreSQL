@@ -30,6 +30,7 @@ LEFT JOIN state s ON c.state_id = s.state_id
 LEFT JOIN neighborhood nb ON c.neighborhood_id = nb.neighborhood_id;
 
 SELECT * FROM customer_data WHERE customer = 'Amanda';
+DROP VIEW customer_data;
 
 --2. City name and state name and abbreviation.
 CREATE VIEW city_state AS
