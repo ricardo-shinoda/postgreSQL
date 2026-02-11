@@ -1,0 +1,29 @@
+-- Creating Triggers
+
+
+--creating table to study triggers
+CREATE TABLE auditing (
+	aud_id integer NOT NULL,
+	creation_time timestamp NOT NULL 
+);
+
+-- creating function to use in the trigger
+CREATE OR REPLACE FUNCTION audit_insert () RETURNS TRIGGER LANGUAGE plpgsql AS
+$$
+BEGIN
+	insert into auditing (aud_id, creation_time) values (new.aud_id, current_time);
+	return new;
+END
+$$;
+
+DROP FUNCTION audit_insert;
+
+CREATE OR REPLACE TRIGGER aud_trigger AFTER INSERT ON auditing FOR EACH ROW EXECUTE PROCEDURE audit_insert(); 
+
+-- inserting values to the table
+
+CALL audit_insert ('Test1');
+CALL audit_insert ('Test2');
+CALL audit_insert ('Test3');
+CALL audit_insert ('Test4');
+CALL audit_insert ('Test5');
