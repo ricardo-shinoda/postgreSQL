@@ -41,6 +41,8 @@ SELECT
 FROM city ct
 LEFT JOIN state s ON ct.state_id = s.state_id;
 
+DROP VIEW city_state;
+
 SELECT * FROM city_state WHERE city = 'São Paulo';
 SELECT * FROM city_state;
 
@@ -52,6 +54,8 @@ SELECT
     s.company_name AS supplier
 FROM product p
 LEFT JOIN supplier s ON p.supplier_id = s.supplier_id;
+
+DROP VIEW product_supplier;
 
 SELECT * FROM product_supplier WHERE product_name = 'Monitor';
 SELECT * FROM product_supplier;
@@ -67,6 +71,8 @@ SELECT
 FROM shipping_company sc
 LEFT JOIN city ct ON sc.city_id = ct.city_id
 LEFT JOIN state s ON ct.state_id = s.state_id;
+
+DROP VIEW shipping_company_state;
 
 SELECT * FROM shipping_company_state WHERE abbreviation = 'SP';
 SELECT * FROM shipping_company_state;
