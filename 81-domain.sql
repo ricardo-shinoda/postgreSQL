@@ -11,6 +11,8 @@ CREATE DOMAIN code AS varchar(10);
 CREATE DOMAIN short_name AS varchar(15);
 CREATE DOMAIN median_name AS varchar(50);
 CREATE DOMAIN long_name AS varchar(70);
+CREATE DOMAIN genre AS char(1);
+CREATE DOMAIN text AS text;
 
 -- Date/hour
 CREATE DOMAIN date AS date;

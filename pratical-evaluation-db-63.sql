@@ -16,6 +16,7 @@ CREATE TABLE publisher (
 	CONSTRAINT un_publisher_name UNIQUE (name)
 );
 
+
 --3. Insert the data below into the PUBLISHER table.
 --| Name           |
 --|----------------|

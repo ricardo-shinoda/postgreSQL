@@ -93,6 +93,8 @@ LEFT JOIN salesperson sp ON sp.salesperson_id = o.salesperson_id;
 
 SELECT * FROM order_details WHERE salesperson = 'Maria';
 
+DROP VIEW order_details;
+
 --6. Product name, quantity, unit price and total value of products in the order.
 CREATE VIEW order_summary AS
 SELECT
@@ -103,6 +105,8 @@ SELECT
 FROM order_product op
 LEFT JOIN product p ON op.product_id = p.product_id
 LEFT JOIN orders o ON op.order_id = o.order_id;
+
+DROP VIEW order_summary;
 
 SELECT * FROM order_summary WHERE order_total < 1000;
 SELECT * FROM order_summary;

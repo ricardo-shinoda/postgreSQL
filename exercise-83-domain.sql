@@ -51,7 +51,7 @@ SELECT * FROM nationality;
 
 ALTER TABLE nationality ALTER COLUMN name TYPE long_name;
 
--- Table order
+-- Table orders
 SELECT * FROM orders;
 
 ALTER TABLE orders ALTER COLUMN customer_id TYPE shortid;
