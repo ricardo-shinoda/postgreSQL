@@ -36,3 +36,29 @@ CREATE TABLE orders (
 	CONSTRAINT fk_orders_product_id FOREIGN KEY (product_id) REFERENCES products(product_id),
 	CONSTRAINT ck_orders_quantity CHECK (quantity > 0)
 );
+
+-- 4. inserting date into tables
+INSERT INTO customers (first_name, last_name, email, country)
+SELECT
+	'DevUser_' || i,
+	'Test_' || i,
+	'user_' || i || '@data-engineering.io',
+	(ARRAY['USA', 'Brazil', 'Germany', 'Japan', 'UK', 'Canada'])[floor(random() * 6 + 1)]
+FROM generate_series(1, 1000) s(i);
+
+
+INSERT INTO products (product_name, category, price)
+SELECT 
+	'Product_' || i,
+	(ARRAY['Tech', 'Home', 'Office', 'Garden'])[floor(random() * 4 + 1)],
+	(random() * 500 + 10)::decimal(10,2)
+FROM generate_series(1, 100) s(i);
+
+INSERT INTO orders (customer_id, product_id, quantity)
+SELECT
+	floor(random() * 1000 + 1),
+	floor(random() * 100 + 1),
+	floor(random() * 5 + 1)
+FROM generate_series(1, 1000) s(i);
+
+SELECT * FROM orders;
