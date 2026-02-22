@@ -71,6 +71,42 @@ SELECT
 		ORDER BY price
 	) AS previous_value
 FROM products;
+
+-- Using PARTITION to group by category
+SELECT
+	product_id,
+	product_name,
+	category,
+	price,
+	ROW_NUMBER () OVER(
+		PARTITION BY category
+		ORDER BY price
+	) AS previous_value
+FROM products;
+
+-- Bringing the top 3 least prices by category
+SELECT * FROM 
+(SELECT
+	product_id,
+	product_name,
+	category,
+	price,
+	ROW_NUMBER () OVER(
+		PARTITION BY category
+		ORDER BY price
+	) AS previous_value
+FROM products) AS pop
+WHERE previous_valueu <= 3;
+
+-- also check on:
+-- FIRST_VALUE
+-- NTH_VALUE
+-- AVG
+-- PERCENT_RANK
+-- CUME_DIST
+-- NTILE
+-- PERCENTILE_CONT
+-- PERCENTILE_DISC
 	
 	
 	
