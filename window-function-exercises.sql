@@ -79,7 +79,16 @@ WHERE rk.ranking <= 3;
 --Exercise Set 3: LAG and LEAD Functions
 --Exercise 3.1:
 --For each employee, show their current salary and the salary of the person hired just before them in the same department.
---
+SELECT
+	emp_name,
+	hire_date,
+	department,
+	salary AS current_salary,
+	lag(salary, 1) OVER (
+		PARTITION BY department
+	) AS person_hired_before
+FROM employees;
+
 --Exercise 3.2:
 --Calculate the month-over-month sales growth for each employee (difference between current month's sales and previous month's sales).
 --
