@@ -96,7 +96,7 @@ SELECT * FROM
 		ORDER BY price
 	) AS previous_value
 FROM products) AS pop
-WHERE previous_valueu <= 3;
+WHERE previous_value <= 3;
 
 -- also check on:
 -- FIRST_VALUE

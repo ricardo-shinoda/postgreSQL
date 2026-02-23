@@ -59,7 +59,23 @@ GROUP BY emp.emp_name, sale_date, sales.amount, sales.emp_id;
 
 --Exercise 2.2:
 --Calculate a 3-day moving average of sales amount for each employee.
---
+SELECT * FROM
+(SELECT 
+	avg(amount) AS sales,
+	emp.emp_name AS name,
+	sales.sale_date,
+	round(AVG(amount) OVER (
+		PARTITION BY sales.emp_id
+	), 2) AS average,
+	ROW_NUMBER () OVER (
+		PARTITION BY emp.emp_name
+		ORDER BY sale_date ASC
+	) AS ranking
+FROM sales
+LEFT JOIN employees emp ON emp.emp_id = sales.emp_id
+GROUP BY emp.emp_id, sales.emp_id, sales.amount, sales.sale_date) AS rk
+WHERE rk.ranking <= 3;
+
 --Exercise Set 3: LAG and LEAD Functions
 --Exercise 3.1:
 --For each employee, show their current salary and the salary of the person hired just before them in the same department.
