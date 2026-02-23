@@ -91,11 +91,24 @@ FROM employees;
 
 --Exercise 3.2:
 --Calculate the month-over-month sales growth for each employee (difference between current month's sales and previous month's sales).
---
+SELECT
+	emp.emp_name AS employee,
+	sales.sale_date,
+	sum(sales.amount) AS current_sales,
+	LAG(amount, 1) OVER (
+		PARTITION BY sales.emp_id
+		ORDER by sale_date
+	) AS previous_month_sales
+FROM sales
+LEFT JOIN employees emp ON emp.emp_id = sales.emp_id
+GROUP BY emp.emp_name, sales.amount, sales.emp_id, sales.sale_date;
+
 --Exercise Set 4: Complex Scenarios
 --Exercise 4.1:
 --Find employees who earn more than the average salary of their department, but less than the average salary of the company.
---
+
+
+
 --Exercise 4.2:
 --Calculate the percentage of total company sales each employee contributes, by month.
 --
