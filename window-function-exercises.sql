@@ -106,15 +106,64 @@ GROUP BY emp.emp_name, sales.amount, sales.emp_id, sales.sale_date;
 --Exercise Set 4: Complex Scenarios
 --Exercise 4.1:
 --Find employees who earn more than the average salary of their department, but less than the average salary of the company.
-
-
+WITH average_data AS (
+	SELECT
+		emp_name AS employee,
+		salary,
+		round(AVG(salary) OVER (
+				PARTITION BY department
+			), 2) AS average_department,
+		round(AVG(salary) OVER(), 2) AS avg_total
+FROM employees
+)
+SELECT * FROM average_data
+WHERE salary > average_department AND salary < avg_total;
 
 --Exercise 4.2:
 --Calculate the percentage of total company sales each employee contributes, by month.
---
+SELECT 
+  emp_id,
+  TO_CHAR(sale_date, 'YYYY-MM') AS month,
+  SUM(amount) AS employee_monthly_total,
+  SUM(SUM(amount)) OVER (PARTITION BY TO_CHAR(sale_date, 'YYYY-MM')) AS company_monthly_total,
+  ROUND((SUM(amount) / SUM(SUM(amount)) OVER (PARTITION BY TO_CHAR(sale_date, 'YYYY-MM'))) * 100, 2) AS percentage_contribution
+FROM sales
+GROUP BY emp_id, TO_CHAR(sale_date, 'YYYY-MM')
+ORDER BY month, emp_id ASC;
+
 --Exercise 4.3:
 --Identify the first and last sale for each employee in each product category.
---
+
+WITH ranked_sales AS (
+	SELECT 
+		sale_id,
+		emp_id,
+		sale_date,
+		amount,
+		product_category,
+		ROW_NUMBER() OVER (
+			PARTITION BY emp_id, product_category
+			ORDER BY sale_date ASC
+		) AS rn_first,
+		ROW_NUMBER() OVER (
+			PARTITION BY emp_id, product_category
+			ORDER BY sale_date DESC
+		) AS rn_last
+	FROM sales
+)
+SELECT
+	emp_id,
+	product_category,
+	max(CASE WHEN rn_first = 1 THEN sale_id END) AS first_sale_id,
+	max(CASE WHEN rn_first = 1 THEN sale_date END) AS first_sale_date,
+	max(CASE WHEN rn_first = 1 THEN amount END) AS first_sale_amount,
+	max(CASE WHEN rn_last = 1 THEN sale_id END) AS last_sale_id,
+	max(CASE WHEN rn_last = 1 THEN sale_date END) AS last_sale_date,
+	max(CASE WHEN rn_last = 1 THEN amount END) AS last_amount
+FROM ranked_sales
+GROUP BY emp_id, product_category
+ORDER BY emp_id, product_category;
+
 --Exercise Set 5: Advanced Challenges
 --Exercise 5.1:
 --Find the salary quartiles for each department.
