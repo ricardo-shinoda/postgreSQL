@@ -167,7 +167,31 @@ ORDER BY emp_id, product_category;
 --Exercise Set 5: Advanced Challenges
 --Exercise 5.1:
 --Find the salary quartiles for each department.
---
+-- Q2 = Median value
+-- Q1 = Median from first half
+-- Q3 = Median from second half
+
+SELECT
+	emp_name AS name,
+	department,
+	salary,
+	NTILE(4) OVER (
+		PARTITION BY department
+		ORDER BY salary
+) AS salary_quartile
+FROM employees;
+	
+SELECT DISTINCT 
+	department,
+	PERCENTILE_CONT(0.25) WITHIN GROUP (ORDER BY salary) AS Q1,
+	PERCENTILE_CONT(0.50) WITHIN GROUP (ORDER BY salary) AS Q2,
+	PERCENTILE_CONT(0.75) WITHIN GROUP (ORDER BY salary) AS Q3
+FROM employees
+GROUP BY department;
+
+
+SELECT * FROM employees;
+
 --Exercise 5.2:
 --For each employee, calculate the difference between their salary and the salary of the next highest-paid person in their department.
 --
