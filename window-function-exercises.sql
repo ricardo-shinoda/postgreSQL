@@ -7,7 +7,7 @@ SELECT
 	emp_name,
 	department,
 	salary,
-	ROW_NUMBER() OVER (
+	RANK() OVER (
 		PARTITION BY department
 		ORDER BY salary desc
 	) AS ranking
@@ -26,6 +26,18 @@ SELECT
 	round(AVG(salary) OVER (PARTITION BY department), 2) AS avg_salary
 FROM employees;
 
+
+SELECT 
+	emp.emp_name,
+	sales.sale_date,
+	sales.amount,
+	sum(sales.amount) OVER(
+		PARTITION BY sales.emp_id
+		ORDER BY sale_date
+		ROWS UNBOUNDED PRECEDING 
+	) AS running_totals
+FROM sales
+JOIN employees emp ON emp.emp_id = sales.emp_id;
 
 --Exercise 1.3:
 --Find the top 3 highest-paid employees in each department.
@@ -75,6 +87,20 @@ FROM sales
 LEFT JOIN employees emp ON emp.emp_id = sales.emp_id
 GROUP BY emp.emp_id, sales.emp_id, sales.amount, sales.sale_date) AS rk
 WHERE rk.ranking <= 3;
+
+-- corrected version
+SELECT
+	emp_name,
+	sale_date,
+	amount,
+	round(AVG(amount) OVER (
+		PARTITION BY emp.emp_id
+		ORDER BY sale_date
+		ROWS BETWEEN 2 PRECEDING AND CURRENT ROW 
+	), 2) AS moving_avg_3day
+FROM sales
+JOIN employees emp ON emp.emp_id = sales.emp_id
+ORDER BY emp.emp_id, sales.sale_date;
 
 --Exercise Set 3: LAG and LEAD Functions
 --Exercise 3.1:
@@ -194,6 +220,23 @@ SELECT * FROM employees;
 
 --Exercise 5.2:
 --For each employee, calculate the difference between their salary and the salary of the next highest-paid person in their department.
---
+WITH next_highest AS (
+	SELECT 
+		emp_name, 
+		department, 
+		salary,
+		LEAD(salary, 1) OVER (
+			PARTITION BY department
+			ORDER BY salary
+		) AS next_salary
+	FROM employees
+)
+SELECT
+	emp_name,
+	salary,
+	next_salary,
+	COALESCE((salary - next_salary)::TEXT, ' Highest') AS salary_difference
+FROM next_highest;
+
 --Exercise 5.3:
 --Identify employees whose salary increased by more than 10% from their first year to their current year (assuming you have historical salary data).
