@@ -102,6 +102,20 @@ FROM sales
 JOIN employees emp ON emp.emp_id = sales.emp_id
 ORDER BY emp.emp_id, sales.sale_date;
 
+
+-- The same example of 3 day moving forward of sales amount do looking 1 day behind and 1 day ahead
+SELECT 
+	emp.emp_name AS employee,
+	sale_date,
+	amount,
+	round(avg(amount) OVER (
+		PARTITION BY emp_name
+		ORDER BY sale_date
+		ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING
+	), 2) AS centered_sales_average
+FROM sales
+LEFT JOIN employees emp ON emp.emp_id = sales.emp_id;
+
 --Exercise Set 3: LAG and LEAD Functions
 --Exercise 3.1:
 --For each employee, show their current salary and the salary of the person hired just before them in the same department.
@@ -110,9 +124,9 @@ SELECT
 	hire_date,
 	department,
 	salary AS current_salary,
-	lag(salary, 1) OVER (
+	LAG(salary, 1) OVER (
 		PARTITION BY department
-	) AS person_hired_before
+	) AS previous_hired_person
 FROM employees;
 
 --Exercise 3.2:
@@ -157,6 +171,27 @@ FROM sales
 GROUP BY emp_id, TO_CHAR(sale_date, 'YYYY-MM')
 ORDER BY month, emp_id ASC;
 
+-- An alternative solution:
+WITH monthly_employee_sales AS (
+    SELECT 
+        emp_id,
+        DATE_TRUNC('month', sale_date) AS month,
+        SUM(amount) AS employee_monthly_total
+    FROM sales
+    GROUP BY emp_id, DATE_TRUNC('month', sale_date)
+)
+SELECT 
+    emp_id,
+    TO_CHAR(month, 'YYYY-MM') AS month,
+    employee_monthly_total,
+    SUM(employee_monthly_total) OVER (PARTITION BY month) AS company_monthly_total,
+    ROUND(
+        (employee_monthly_total / SUM(employee_monthly_total) OVER (PARTITION BY month)) * 100, 
+        2
+    ) AS percentage_contribution
+FROM monthly_employee_sales
+ORDER BY month, emp_id;
+
 --Exercise 4.3:
 --Identify the first and last sale for each employee in each product category.
 
@@ -189,6 +224,37 @@ SELECT
 FROM ranked_sales
 GROUP BY emp_id, product_category
 ORDER BY emp_id, product_category;
+
+-- An alternative solution
+
+SELECT * FROM sales;
+
+WITH first_last_value AS (
+SELECT 
+	emp_id,
+	amount,
+	product_category,
+	FIRST_VALUE(amount) OVER (
+		PARTITION BY emp_id, product_category
+		ORDER BY product_category
+		ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+	) AS first_sale,
+	LAST_VALUE(amount) OVER (
+		PARTITION BY emp_id, product_category 
+		ORDER BY product_category
+		ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+	) AS last_sale
+FROM sales
+)
+SELECT
+	emp_id,
+	product_category,
+	max(first_sale) AS first_sale,
+	max(last_sale) AS last_sale
+FROM first_last_value
+GROUP BY emp_id, product_category
+ORDER BY emp_id, product_category;
+
 
 --Exercise Set 5: Advanced Challenges
 --Exercise 5.1:
