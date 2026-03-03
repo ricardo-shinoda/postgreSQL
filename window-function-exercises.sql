@@ -284,6 +284,16 @@ GROUP BY department;
 
 SELECT * FROM employees;
 
+SELECT
+	emp_name,
+	department,
+	salary,
+	NTILE(4) OVER (
+--		PARTITION BY department
+		ORDER BY salary
+) AS quartile
+FROM employees;
+
 --Exercise 5.2:
 --For each employee, calculate the difference between their salary and the salary of the next highest-paid person in their department.
 WITH next_highest AS (
@@ -306,3 +316,32 @@ FROM next_highest;
 
 --Exercise 5.3:
 --Identify employees whose salary increased by more than 10% from their first year to their current year (assuming you have historical salary data).
+
+ALTER TABLE employees
+ADD COLUMN salary_2025 decimal(10,2);
+
+UPDATE employees
+SET salary_2025 = 
+	CASE
+		WHEN emp_id IN (1, 3, 8, 13) THEN salary * 0.8
+		WHEN emp_id IN (5, 9, 12) THEN salary * 0.75
+		WHEN department = 'IT' THEN salary * 0.95
+		WHEN department = 'Sales' THEN salary * 0.91
+		ELSE salary * 0.90
+	END;
+	
+
+WITH higher_increase AS (
+SELECT
+	emp_name,
+	department,
+	salary_2025,
+	salary,
+	round(100 - (salary_2025 / salary) * 100, 2) AS percentual
+FROM employees
+)
+SELECT * FROM higher_increase
+WHERE percentual >= 10
+ORDER BY percentual ASC;
+
+SELECT * FROM sales;
