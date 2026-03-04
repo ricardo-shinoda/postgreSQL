@@ -32,3 +32,41 @@ WITH top_two AS (
 )
 SELECT * FROM top_two
 WHERE rank_in_dept <= 2;
+
+--Exercise 1.3: Product Category Sales Ranking
+--For each employee, rank their sales by product category (which category do they sell most in?).
+--Show each employee's sales per category with rank
+
+WITH highest_sales_category AS (
+SELECT
+	emp.emp_name AS employee,
+	sales.amount,
+	sales.product_category,
+	RANK () OVER ( 
+		PARTITION BY emp.emp_id
+		ORDER BY amount DESC
+	) AS rank
+FROM sales
+LEFT JOIN employees emp ON emp.emp_id = sales.emp_id
+)
+SELECT * FROM highest_sales_category 
+WHERE RANK = 1
+ORDER BY amount DESC;
+
+--SECTION 2: WINDOW FUNCTIONS - RUNNING TOTALS & MOVING CALCULATIONS
+--Exercise 2.1: Cumulative Sales by Employee
+--Show each sale with running total of sales for that employee.
+--For each sale, show: sale_date, amount, employee's running total
+
+SELECT
+	emp.emp_name AS employee,
+	sales.sale_date,
+	sales.amount,
+	SUM(sales.amount) OVER (
+		PARTITION BY sales.emp_id
+		ORDER BY sales.sale_date
+	) AS employee_running_total
+FROM sales
+LEFT JOIN employees emp ON emp.emp_id = sales.emp_id;
+
+
