@@ -70,3 +70,25 @@ FROM sales
 LEFT JOIN employees emp ON emp.emp_id = sales.emp_id;
 
 
+--Exercise 2.2: Monthly Company Sales with Running Total
+--Calculate monthly sales for the company and add a running total.
+--Columns: month, monthly_total, company_running_total
+
+WITH running AS (
+SELECT 
+	date_trunc('month', sale_date)::date AS month,
+	sum(sales.amount) AS monthly_total
+--	sum(sales.amount) OVER (ORDER BY sale_date) AS company_running_total
+FROM sales
+GROUP BY date_trunc('month', sale_date)
+)
+SELECT
+	month,
+	monthly_total,
+	sum(monthly_total) OVER (ORDER BY month) AS company_running_totals
+FROM running
+ORDER BY MONTH;
+
+	
+
+
